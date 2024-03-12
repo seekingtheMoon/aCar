@@ -13,18 +13,16 @@ public class NumberCodeController {
     @GetMapping("/numberCode/{size}")
     public ResponseResult numberCode(@PathVariable("size") int size) {
 
-        System.out.println("size: " + size);
-
         // 生成验证码
         double mathRandom = (Math.random() * 9 + 1) * (int)(Math.pow(10, size - 1));
         int resultInt = (int) mathRandom;
 
+        // 响应对象
         NumberCodeResponse response = new NumberCodeResponse();
         response.setNumberCode(resultInt);
 
-        System.out.println(response.getNumberCode());
-
         // 返回
         return ResponseResult.success(response);
+
     }
 }

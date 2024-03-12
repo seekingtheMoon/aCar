@@ -13,6 +13,24 @@ public class ResponseResult<T> {
     private String message;
     private T data;
 
+    /**
+     * 无参成功类型
+     * @return
+     * @param <T>
+     */
+    public static <T> ResponseResult success() {
+        return new ResponseResult()
+                .setCode(CommonStatusEnum.SUCCESS.getCode())
+                .setMessage(CommonStatusEnum.SUCCESS.getValue())
+                .setData("");
+    }
+
+    /**
+     * 自定义成功
+     * @param data 给定类型 T
+     * @return
+     * @param <T>
+     */
     public static <T> ResponseResult success(T data) {
         return new ResponseResult()
                 .setCode(CommonStatusEnum.SUCCESS.getCode())
