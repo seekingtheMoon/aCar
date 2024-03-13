@@ -1,10 +1,12 @@
 package com.ekko.apiPassenger.service;
 
 import com.ekko.apiPassenger.remote.ServiceVerificationcodeClient;
+import com.ekko.internalcommon.constant.CommonStatusEnum;
 import com.ekko.internalcommon.dto.ResponseResult;
 import com.ekko.internalcommon.response.NumberCodeResponse;
 import com.ekko.internalcommon.response.TokenResponse;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class VerificationCodeService {
 
     /**
      * 生成验证码
+     *
      * @param passengerPhone 用户手机号
      * @return
      */
@@ -42,7 +45,7 @@ public class VerificationCodeService {
         String key = generatorKeyByPhone(passengerPhone);
         // 存入 redis
         stringRedisTemplate.opsForValue()
-                .set(key, numberCode+"", 2, TimeUnit.MINUTES);
+                .set(key, numberCode + "", 2, TimeUnit.MINUTES);
 
 
         return ResponseResult.success();
@@ -50,6 +53,7 @@ public class VerificationCodeService {
 
     /**
      * 根据手机号生成 key
+     *
      * @param passengerPhone 用户手机号
      * @return
      */
@@ -59,15 +63,14 @@ public class VerificationCodeService {
 
     /**
      * 校验验证码
-     * @param passengerPhone 用户手机号
+     *
+     * @param passengerPhone   用户手机号
      * @param verificationCode 用户填写的验证码
      * @return
      */
     public ResponseResult checkCode(String passengerPhone, String verificationCode) {
 
         // 根据手机号，去redis读取验证码
-        System.out.println("访问redis，获取验证码");
-
         //// 生成 key
         String key = generatorKeyByPhone(passengerPhone);
 
@@ -76,7 +79,20 @@ public class VerificationCodeService {
         System.out.println("redis 中 val " + codeRedis);
 
         // 校验验证码
-        System.out.println("校验用户发送的验证码与redis中验证码是否一致");
+        //// 验证码为空
+        if (StringUtils.isBlank(codeRedis)) {
+            return ResponseResult.fail(
+                    CommonStatusEnum.VERIFICATION_CODE_ERROR.getCode(),
+                    CommonStatusEnum.VERIFICATION_CODE_ERROR.getValue()
+            );
+        }
+        //// 用户提供验证码与redis中验证码不匹配
+        if (!verificationCode.trim().equals(codeRedis.trim())) {
+            return ResponseResult.fail(
+                    CommonStatusEnum.VERIFICATION_CODE_ERROR.getCode(),
+                    CommonStatusEnum.VERIFICATION_CODE_ERROR.getValue()
+            );
+        }
 
         // 判断原来是否有用户，并进行对应的处理
         System.out.println("判断用户类型，对应处理");
