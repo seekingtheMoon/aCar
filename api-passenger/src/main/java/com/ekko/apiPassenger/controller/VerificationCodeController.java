@@ -1,6 +1,5 @@
 package com.ekko.apiPassenger.controller;
 
-import com.ekko.apiPassenger.request.VerificationCodeDTO;
 import com.ekko.apiPassenger.service.VerificationCodeService;
 import com.ekko.internalcommon.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;

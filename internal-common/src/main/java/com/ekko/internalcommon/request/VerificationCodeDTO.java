@@ -1,10 +1,10 @@
-package com.ekko.apiPassenger.request;
-
+package com.ekko.internalcommon.request;
 
 import lombok.Data;
 
 @Data
 public class VerificationCodeDTO {
+
 
     /**
      * 用户手机号码
@@ -15,6 +15,4 @@ public class VerificationCodeDTO {
      * 验证码
      */
     private String verificationCode;
-
-
 }
