@@ -2,6 +2,7 @@ package com.ekko.apiPassenger.controller;
 
 import com.ekko.apiPassenger.service.VerificationCodeService;
 import com.ekko.internalcommon.dto.ResponseResult;
+import com.ekko.internalcommon.request.VerificationCodeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
