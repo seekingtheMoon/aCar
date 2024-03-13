@@ -37,13 +37,6 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-
-        <!--======= internal-common =======-->
-        <dependency>
-            <groupId>com.ekko</groupId>
-            <artifactId>internal-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
