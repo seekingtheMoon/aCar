@@ -1,14 +1,20 @@
 package com.ekko.apiPassenger.request;
 
+
+import lombok.Data;
+
+@Data
 public class VerificationCodeDTO {
 
+    /**
+     * 用户手机号码
+     */
     private String passengerPhone;
 
-    public String getPassengerPhone() {
-        return passengerPhone;
-    }
+    /**
+     * 验证码
+     */
+    private String verificationCode;
 
-    public void setPassengerPhone(String passengerPhone) {
-        this.passengerPhone = passengerPhone;
-    }
+
 }
