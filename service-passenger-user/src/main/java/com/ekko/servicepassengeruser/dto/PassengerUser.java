@@ -17,9 +17,7 @@ public class PassengerUser {
 
     private String passengerName;
 
-
     private byte passengerGender;
-
 
     private byte state;
 
