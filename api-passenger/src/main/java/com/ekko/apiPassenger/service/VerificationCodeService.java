@@ -3,10 +3,12 @@ package com.ekko.apiPassenger.service;
 import com.ekko.apiPassenger.remote.ServicePassengerUserClient;
 import com.ekko.apiPassenger.remote.ServiceVerificationcodeClient;
 import com.ekko.internalcommon.constant.CommonStatusEnum;
+import com.ekko.internalcommon.constant.IdentityConstant;
 import com.ekko.internalcommon.dto.ResponseResult;
 import com.ekko.internalcommon.request.VerificationCodeDTO;
 import com.ekko.internalcommon.response.NumberCodeResponse;
 import com.ekko.internalcommon.response.TokenResponse;
+import com.ekko.internalcommon.utils.JwtUtils;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,10 +110,10 @@ public class VerificationCodeService {
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         // 颁发令牌
-        System.out.println("颁发令牌");
+        String token = JwtUtils.generatorToken(passengerPhone, IdentityConstant.PASSENGER.getIdentity());
 
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken("token value");
+        tokenResponse.setToken(token);
 
 
         return ResponseResult.success(tokenResponse);
