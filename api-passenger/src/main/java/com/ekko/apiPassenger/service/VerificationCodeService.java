@@ -1,8 +1,10 @@
 package com.ekko.apiPassenger.service;
 
+import com.ekko.apiPassenger.remote.ServicePassengerUserClient;
 import com.ekko.apiPassenger.remote.ServiceVerificationcodeClient;
 import com.ekko.internalcommon.constant.CommonStatusEnum;
 import com.ekko.internalcommon.dto.ResponseResult;
+import com.ekko.internalcommon.request.VerificationCodeDTO;
 import com.ekko.internalcommon.response.NumberCodeResponse;
 import com.ekko.internalcommon.response.TokenResponse;
 import net.sf.json.JSONObject;
@@ -19,6 +21,8 @@ public class VerificationCodeService {
 
     @Autowired
     private ServiceVerificationcodeClient serviceVerificationcodeClient;
+
+
 
 
     private String verificationCodePrefix = "passenger-verification-code-";
@@ -61,6 +65,10 @@ public class VerificationCodeService {
         return verificationCodePrefix + passengerPhone;
     }
 
+
+
+    @Autowired
+    private ServicePassengerUserClient servicePassengerUserClient;
     /**
      * 校验验证码
      *
@@ -95,7 +103,9 @@ public class VerificationCodeService {
         }
 
         // 判断原来是否有用户，并进行对应的处理
-        System.out.println("判断用户类型，对应处理");
+        VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
+        verificationCodeDTO.setPassengerPhone(passengerPhone);
+        servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         // 颁发令牌
         System.out.println("颁发令牌");
